@@ -1,0 +1,6 @@
+boto3
+pytest
+pytest-mock
+requests
+requests-mock
+toml

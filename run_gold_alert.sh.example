@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Activate the virtual environment
+source /home/user/project_path/goldAlert/venv/bin/activate
+
+# Run the Python script
+python /home/user/project_path/goldAlert/main.py

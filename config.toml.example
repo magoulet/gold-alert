@@ -1,0 +1,12 @@
+# Sample configuration file for MyApp
+[api]
+# Replace 'your_gold_api_key_here' with your actual Gold API key
+gold_api_key = "your_gold_api_key_here"
+
+[thresholds]
+gold_threshold = 2200
+trigger_condition = "below" # or above
+
+[email_notifications]
+sender = "sender email address"
+recipient = "recipient email address"
