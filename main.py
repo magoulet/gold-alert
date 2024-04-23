@@ -63,7 +63,7 @@ if __name__ == "__main__":
     gold_price_fetcher = GoldPriceFetcher(gold_price_api, email_sender)
 
     # Run the fetch_price and process_response methods
-    # result = gold_price_fetcher.fetch_price()
+    result = gold_price_fetcher.fetch_price()
 
     # Mock response
     # result = {
