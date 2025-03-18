@@ -1,18 +1,13 @@
-import logging
-
+from utilities.config import load_config
 from utilities.gold_price_api import GoldPriceAPI
 from utilities.ses_email_sender import EmailSender
-from utilities.config import load_config
+
 
 class GoldPriceFetcher:
     def __init__(self, gold_price_api, email_sender):
         self.gold_price_api = gold_price_api
         self.email_sender = email_sender
 
-        # Configure logging
-        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        self.logger = logging.getLogger(__name__)
-        
         # Load the configuration
         self.config = load_config()
 
@@ -22,7 +17,7 @@ class GoldPriceFetcher:
             result = self.gold_price_api.get_current_gold_price()
             return result
         except Exception as e:
-            self.logger.error(f"An error occurred while fetching the gold price: {str(e)}")
+            print(f"An error occurred while fetching the gold price: {str(e)}")
             return None
 
     def process_response(self, result):
@@ -34,14 +29,14 @@ class GoldPriceFetcher:
             if result["price"] < threshold:
                 self.send_notification(result["price"])
             else:
-                self.logger.info("Gold price is above the threshold. No notification sent.")
+                print(f"Gold price (${result['price']:.2f}) is above the threshold. No notification sent.")
         elif trigger_condition == "above":
             if result["price"] > threshold:
                 self.send_notification(result["price"])
             else:
-                self.logger.info("Gold price is below the threshold. No notification sent.")
+                print(f"Gold price (${result['price']:.2f}) is below the threshold. No notification sent.")
         else:
-            self.logger.error(f"Invalid trigger condition: {trigger_condition}")
+            print(f"Invalid trigger condition: {trigger_condition}")
 
     def send_notification(self, price):
         try:
@@ -52,7 +47,7 @@ class GoldPriceFetcher:
             recipient = self.config["email_notifications"]["recipient"]
             self.email_sender.send_email(subject, body_text, sender, recipient)
         except Exception as e:
-            self.logger.error(f"An error occurred while sending the email notification: {str(e)}")
+            print(f"An error occurred while sending the email notification: {str(e)}")
 
 if __name__ == "__main__":
     # Instantiate necessary objects
